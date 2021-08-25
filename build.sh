@@ -2,17 +2,17 @@
 CFLAGS="-pedantic -Wall -Wfatal-errors -std=c99 -D_POSIX_C_SOURCE=200809L $CFLAGS"
 SRCS="vi.c ex.c lbuf.c sbuf.c ren.c led.c uc.c term.c regex.c conf.c hund.c"
 OBJS="vi.o ex.o lbuf.o sbuf.o ren.o led.o uc.o term.o regex.o conf.o hund.o"
-OS="$(uname)"
+
 case ${CC:-0} in
 	0) CC="gcc";;
 	*) :
 esac
-if [ "$OS" = "FreeBSD" ]; then
-	CFLAGS="$CFLAGS -D_BSD_SOURCE"
-fi
-if [ "$OS" = "OpenBSD" ]; then
-	CFLAGS="$CFLAGS -D_BSD_SOURCE"
-fi
+
+case "$(uname)" in
+	FreeBSD) CFLAGS="$CFLAGS -D_BSD_SOURCE" ;;
+	OpenBSD) CFLAGS="$CFLAGS -D_BSD_SOURCE" ;;
+	*) :
+esac
 
 split() {
 	set -f
